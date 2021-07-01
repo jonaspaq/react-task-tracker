@@ -1,0 +1,6 @@
+
+form.input-group {
+    z-index: 2;
+    position: sticky;
+    top: 30px;
+}
