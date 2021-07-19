@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## App prototype link
+Open [React task tracker](https://jonaspaq.github.io/react-task-tracker/public/index.html) to view the app in the browser.
+
 ## Available Scripts
 
 In the project directory, you can run:
