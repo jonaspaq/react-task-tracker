@@ -3,6 +3,7 @@ import '../css/App.css';
 import AddTaskInput from './atoms/AddTaskInput';
 import Logo from './atoms/Logo'
 import TaskList from './molecules/TaskList';
+import Paragraph from './atoms/Paragraph'
 
 const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const dayToday = new Date().getDay()
@@ -14,15 +15,16 @@ class App extends React.Component {
       taskList: [
         {
           id: 1,
-          title: 'Feed the dogs'
+          title: 'Feed the elephants'
         },
         {
           id: 2,
-          title: 'Cook chicken for midnight snacks',
+          title: 'Cook lechon for midnight snacks',
         }
       ],
     }
     this.onTaskInputSubmit = this.onTaskInputSubmit.bind(this)
+    this.removeTask = this.removeTask.bind(this)
   }
 
   // componentDidMount() {
@@ -34,18 +36,35 @@ class App extends React.Component {
   // Methods
   onTaskInputSubmit(value) {
     if (!value.length) {
-      alert ("Please input a value")
+      alert ("Please input a task.")
       return;
     }
+
     this.setState({
-      tasklist: this.state.taskList.push({
+      taskList: [...this.state.taskList, {
         id: this.state.taskList.length + 1,
         title: value,
-      })
+      }]
+    })
+  }
+
+  removeTask(task) {
+    window.confirm (`Are you sure you want to remove this task?`)
+    const taskIndex = this.state.taskList.indexOf(task);
+    let taskList = [...this.state.taskList]
+    taskList.splice(taskIndex, 1)
+
+    this.setState({
+      taskList: taskList
     })
   }
 
   render() {
+    let taskInterface = <Paragraph text="You have no tasks." />;
+    if(this.state.taskList.length !== 0) {
+      taskInterface = <TaskList taskList={this.state.taskList} onRemoveTask={this.removeTask} />;
+    }
+
     return (
       <div className="container py-3">
         <Logo />
@@ -53,8 +72,8 @@ class App extends React.Component {
         
         <div className="card col-lg-5 mx-auto mt-5 rounded px-3 py-3 shadow-lg">
           <AddTaskInput inputValue={this.newTaskInput} onInputSubmit={this.onTaskInputSubmit} className="mb-3 mt-4" />
-  
-          <TaskList taskList={this.state.taskList} />
+      
+          {taskInterface}
         </div>
       </div>
     );
